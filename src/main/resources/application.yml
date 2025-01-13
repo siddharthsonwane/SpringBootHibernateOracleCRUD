@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: SpringBootHibernateOracleCRUD
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: system
+    password: system
+    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 600000  # 10 minutes
+      connection-timeout: 30000  # 30 seconds
+      max-lifetime: 1800000  # 30 minutes
+
+  jpa:
+    hibernate:
+      ddl-auto: update  # 'validate', 'update', 'create', 'none'
+      show-sql: true  # Set to false in production
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect
+        hbm2ddl.auto: update  # You can change to 'validate' or 'create' as needed
+        format_sql: true
+        use_sql_comments: true
+    database-platform: org.hibernate.dialect.OracleDialect
+    open-in-view: false  # Disable if you want to avoid lazy loading issues
+  
+  profiles:
+    active: dev  # Ensure the profile is correctly set (dev, prod, etc.)
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.boot.autoconfigure.orm.jpa: DEBUG
+    com.zaxxer.hikari: DEBUG
+    org.springframework: DEBUG
+    org.hibernate: DEBUG
